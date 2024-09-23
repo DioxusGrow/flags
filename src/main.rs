@@ -2,6 +2,7 @@
 use dioxus::prelude::*;
 use dioxus_logger::tracing::{info, Level};
 use once_cell::sync::Lazy;
+
 fn main() {
     // Init logger
     dioxus_logger::init(Level::INFO).expect("failed to init logger");
@@ -19,10 +20,10 @@ fn App() -> Element {
 fn Home() -> Element {
     rsx! {
         h1 { class: "p-4", "Flags:" }
-        for (lang , flag) in LANG_NAMES.iter().zip(FLAGS.iter()) {
+        for (lang , Flag) in LANG_NAMES.iter().zip(FLAGS.iter()) {
             div { class: "",
                 div { class: "px-4 py-1 flex flex-row space-x-2",
-                    div { flag() }
+                    div { Flag {} }
                     div { "{lang}" }
                 }
             }
