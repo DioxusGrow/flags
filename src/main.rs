@@ -1,7 +1,6 @@
 #![allow(non_snake_case)]
 use dioxus::prelude::*;
 use dioxus_logger::tracing::{info, Level};
-use once_cell::sync::Lazy;
 
 fn main() {
     // Init logger
@@ -20,10 +19,10 @@ fn App() -> Element {
 fn Home() -> Element {
     rsx! {
         h1 { class: "p-4", "Flags:" }
-        for (lang , Flag) in LANG_NAMES.iter().zip(FLAGS.iter()) {
+        for (lang , flag) in LANG_NAMES.iter().zip(flags().iter()) {
             div { class: "",
                 div { class: "px-4 py-1 flex flex-row space-x-2",
-                    div { Flag {} }
+                    div { {flag} }
                     div { "{lang}" }
                 }
             }
@@ -32,7 +31,17 @@ fn Home() -> Element {
 }
 
 pub const LANG_NAMES: [&str; 2] = ["English", "German"];
-pub static FLAGS: Lazy<[fn() -> Element; 2]> = Lazy::new(|| [De, Sm]);
+
+fn flags() -> [Element; 2] {
+    [
+        rsx! {
+            De {}
+        },
+        rsx! {
+            Sm {}
+        },
+    ]
+}
 
 #[component]
 pub fn De() -> Element {
